@@ -36291,19 +36291,19 @@ var Message_1 = __importDefault(require("./components/Message"));
 
 var Root = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  min-width: 300px;\n"], ["\n  min-width: 300px;\n"])));
 var Top = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  position: fixed;\n  top: 6px;\n"], ["\n  position: fixed;\n  top: 6px;\n"])));
-var ToggleButton = styled_components_1.default.button(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  margin-bottom: 6px;\n"], ["\n  margin-bottom: 6px;\n"])));
+var Label = styled_components_1.default.label(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  font-weight: bold;\n  > * {\n    margin-left: 8px;\n  }\n"], ["\n  font-weight: bold;\n  > * {\n    margin-left: 8px;\n  }\n"])));
 var Scroller = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  width: 100%;\n  height: 600px;\n  overflow: auto;\n  background-color: #fafafa;\n"], ["\n  width: 100%;\n  height: 600px;\n  overflow: auto;\n  background-color: #fafafa;\n"])));
 var Content = styled_components_1.default.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  height: 3000px;\n"], ["\n  height: 3000px;\n"])));
 var Ball = styled_components_1.default.div(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  width: 100px;\n  height: 100px;\n  border-radius: 50%;\n  background-color: #1db954;\n  margin-left: auto;\n  margin-right: auto;\n  margin-top: 50%;\n"], ["\n  width: 100px;\n  height: 100px;\n  border-radius: 50%;\n  background-color: #1db954;\n  margin-left: auto;\n  margin-right: auto;\n  margin-top: 50%;\n"])));
-var Mode;
+var ParentType;
 
-(function (Mode) {
-  Mode[Mode["DOCUMENT_PARENT"] = 0] = "DOCUMENT_PARENT";
-  Mode[Mode["SCROLLABLE_PARENT"] = 1] = "SCROLLABLE_PARENT";
-})(Mode || (Mode = {}));
+(function (ParentType) {
+  ParentType[ParentType["DOCUMENT"] = 0] = "DOCUMENT";
+  ParentType[ParentType["SCROLLABLE_CONTAINER"] = 1] = "SCROLLABLE_CONTAINER";
+})(ParentType || (ParentType = {}));
 
 function App() {
-  var _a = React.useState(Mode.DOCUMENT_PARENT),
+  var _a = React.useState(ParentType.DOCUMENT),
       mode = _a[0],
       setMode = _a[1];
 
@@ -36316,16 +36316,21 @@ function App() {
   var innerContent = React.createElement(Content, null, React.createElement(Ball, {
     ref: ref
   }));
-  return React.createElement(Root, null, React.createElement(Top, null, React.createElement(ToggleButton, {
-    type: "button",
-    onClick: function onClick() {
-      return setMode(function (current) {
-        return current === Mode.DOCUMENT_PARENT ? Mode.SCROLLABLE_PARENT : Mode.DOCUMENT_PARENT;
-      });
+  return React.createElement(Root, null, React.createElement(Top, null, React.createElement(Label, {
+    htmlFor: "parentType"
+  }, "Parent Type", React.createElement("select", {
+    id: "parentType",
+    value: mode,
+    onChange: function onChange(e) {
+      setMode(parseInt(e.target.value));
     }
-  }, mode === Mode.DOCUMENT_PARENT ? 'Document' : 'Scrollable Parent'), React.createElement(Message_1.default, {
+  }, React.createElement("option", {
+    value: ParentType.DOCUMENT
+  }, "Document"), React.createElement("option", {
+    value: ParentType.SCROLLABLE_CONTAINER
+  }, "Scrollable Container"))), React.createElement(Message_1.default, {
     isVisible: isVisible
-  })), mode === Mode.DOCUMENT_PARENT ? innerContent : React.createElement(Scroller, {
+  })), mode === ParentType.DOCUMENT ? innerContent : React.createElement(Scroller, {
     ref: rootRef
   }, innerContent));
 }
@@ -36360,7 +36365,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58772" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61099" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
